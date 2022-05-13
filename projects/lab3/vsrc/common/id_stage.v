@@ -111,6 +111,9 @@ assign inst_add     =  ( opcode == `OPCODE_ADD )    & ( funct3 == `FUNCT3_ADD ) 
 // Task - 1
 // add inst_mul and inst_sw
 
+assign inst_mul     =  ( opcode == `OPCODE_MUL)     & ( funct3 == `FUNCT3_MUL)  & ( funct7 == `FUNCT7_MUL);
+assign inst_sw      =  ( opcode == `OPCODE_SW)     & ( funct3 == `FUNCT3_SW) ;
+
 // ------------------------------
 // Vector Instructions
 // ------------------------------
