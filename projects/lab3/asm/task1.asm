@@ -16,7 +16,6 @@ addi    x12,    zero,   0
 
 addi    x15,    x6,     0   ; addr_B = reg[x6]
 
-
 lw      x13,    0(x5)       ; load data_A
 lw      x14,    0(x15)      ; load data_B
 mul     x16,    x13,    x14 ; reg[x16] = data_A * data_B
@@ -28,16 +27,15 @@ addi    x15,     x6,    4   ; addr_B = reg[x6] + 4
 addi    x12,    x12,    1   
 bne     x12,    x9 ,    -36 
 
-
 add     x17,    x17,    x7   ; reg[17] = row(A)*col(B) + C
-sw      x17,    0(x8)        ; save x17 into mem[x8]  
+sw      x17,    0(x8)        ; save x17 into mem[x8] 
+addi    x17,    zero,   0 
 addi    x6,     x6,     32   ; reg[x5] = reg[x5] + 32 // col + 1
 addi    x7,     x7,     4
 addi    x8,     x8,     4
                  
-
 addi    x11,    x11,    1   
-bne     x11,    x9 ,    -68 
+bne     x11,    x9 ,    -72 
 
 addi    x10,    x10,    1   
-bne     x10,    x9 ,    -84 
+bne     x10,    x9 ,    -88
