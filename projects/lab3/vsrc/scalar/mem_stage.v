@@ -28,7 +28,7 @@ assign mem_r_data_o = mem_r_addr_i[2] ? ram_r_data_i[63:32] : ram_r_data_i[31: 0
 assign ram_w_ena_o  = mem_w_ena_i ;
 assign ram_w_addr_o = mem_w_addr_i ;
 assign ram_w_data_o = mem_w_addr_i[2] ? {mem_w_data_i,32'h0000_0000} : {32'h0000_0000,mem_w_data_i};
-assign ram_w_mask_o = 64'h0000_0000_ffff_ffff;
+assign ram_w_mask_o = 64'hffff_ffff_ffff_ffff;
 
 
 endmodule
