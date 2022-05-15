@@ -130,9 +130,10 @@ assign inst_vmac_sw =  ( opcode == `OPCODE_IVV )    & ( funct3 == `FUNCT3_IVV ) 
 assign inst_vmac_en =  ( opcode == `OPCODE_IVV )    & ( funct3 == `FUNCT3_IVV ) & ( funct6 == `FUNCT6_VMAC_EN ) ;
 
 assign alu_opcode_o =   ( rst == 1'b1 )                     ?   `ALU_OP_NOP :
-                        ( inst_addi || inst_lw  || inst_add ) 
+                        ( inst_addi || inst_lw  || inst_add || inst_sw ) 
                                                             ?   `ALU_OP_ADD :
                         inst_bne                            ?   `ALU_OP_BNE :
+                        inst_mul                            ?   `ALU_OP_MUL :
 
                         inst_vmac_lw                        ?   `ALU_OP_VMAC_LW:
                         inst_vmac_sw                        ?   `ALU_OP_VMAC_SW:
@@ -147,44 +148,47 @@ assign alu_opcode_o =   ( rst == 1'b1 )                     ?   `ALU_OP_NOP :
 // Task - 1
 
 assign rs1_r_ena_o =    ( rst == 1'b1 )                             ?   1'b0    :
-                        ( inst_addi || inst_lw  || inst_add || inst_bne )
+                        ( inst_addi || inst_lw || inst_add || inst_bne || inst_mul || inst_sw)
                                                                     ?   1'b1    :
                                                                         1'b0    ;
 
 assign rs1_r_addr_o =   ( rst == 1'b1 )                             ?   0       :
-                        ( inst_addi || inst_lw || inst_add || inst_bne  )
+                        ( inst_addi || inst_lw || inst_add || inst_bne || inst_mul || inst_sw)
                                                                     ?   rs1     :
                                                                         0       ;
 
 assign rs2_r_ena_o =    ( rst == 1'b1 )                             ?   1'b0    :
-                        ( inst_add || inst_bne )                    ?   1'b1    :
+                        ( inst_add || inst_bne || inst_mul || inst_sw)                    
+                                                                    ?   1'b1    :
                                                                         1'b0    ;
 
 assign rs2_r_addr_o =   ( rst == 1'b1 )                             ?   0       :
-                        ( inst_add || inst_bne  )         
+                        ( inst_add || inst_bne || inst_mul || inst_sw)         
                                                                     ?   rs2     :
                                                                         0       ;
 
-assign op_imm = ( inst_addi || inst_lw ) ;
-assign operand_rs_imm = (inst_addi || inst_lw)  ?   { {(imm_sign_ext_num){imm[11]}} , imm } : 0 ;
+assign op_imm = ( inst_addi || inst_lw || inst_sw) ;
+assign operand_rs_imm = (inst_addi || inst_lw )  ?   { {(imm_sign_ext_num){imm[11]}} , imm }            :
+                        (inst_sw)                ?   { {(imm_sign_ext_num){imm[11]}} , imm[11:5] , rd } :
+                                                                                                      0 ;
 
 
-assign operand_rs1_o =  ( inst_addi || inst_lw ||  inst_bne || inst_add  ) ?   rs1_data_i  : 0 ;
+assign operand_rs1_o =  ( inst_addi || inst_lw ||  inst_bne || inst_add || inst_mul || inst_sw) ?   rs1_data_i  : 0 ;
 
 assign operand_rs2_o =  ( op_imm )                                      ?   operand_rs_imm  : 
-                        ( inst_add || inst_bne )                        ?   rs2_data_i      :
-                                                                            0 ;
+                        ( inst_add || inst_bne || inst_mul )            ?   rs2_data_i      :
+                                                                                          0 ;
 
 assign pc_branch_o = inst_bne ;
 assign pc_offset_o = pc_branch_o ? { {(imm_sign_ext_num-1){imm[11]}}, imm[11], rd[0], imm[10:5], rd[4:1], 1'b0 } : 0 ;
 
-assign wb_ena_o = inst_addi || inst_lw || inst_add ;
+assign wb_ena_o = inst_addi || inst_lw || inst_add || inst_mul;
 assign wb_sel_o = (inst_lw) ? 1'b1  : 0 ;
 assign wb_addr_o = ( wb_ena_o )    ?   rd  : 0 ;
 
 assign mem_r_ena_o = inst_lw ? 1'b1 : 0 ;
-assign mem_w_ena_o = 0 ;
-assign mem_w_data_o = 0 ;
+assign mem_w_ena_o = inst_sw ? 1'b1 : 0 ;
+assign mem_w_data_o = rs2_data_i ;
 
 
 // ====================================================
