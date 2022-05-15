@@ -25,7 +25,7 @@ addi    x5,     x5,     4   ; addr_A = addr_A + 4
 addi    x15,    x15,    4   ; addr_B = addr_B + 4
                                 
 addi    x12,    x12,    1   
-bne     x12,    x9 ,    -36 
+bne     x12,    x9 ,    -32 
 
 lw      x18,    0(x7)
 add     x17,    x18,    x17 ; reg[17] = row(A)*col(B) + C
