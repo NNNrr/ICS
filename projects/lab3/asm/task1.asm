@@ -22,7 +22,7 @@ mul     x16,    x13,    x14 ; reg[x16] = data_A * data_B
 add     x17,    x17,    x16 ; accumulation result put here: reg[x17]    
 
 addi    x5,     x5,     4   ; addr_A = addr_A + 4
-addi    x15,     x6,    4   ; addr_B = reg[x6] + 4
+addi    x15,    x15,    4   ; addr_B = reg[x6] + 4
                                 
 addi    x12,    x12,    1   
 bne     x12,    x9 ,    -36 
