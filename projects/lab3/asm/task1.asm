@@ -15,4 +15,4 @@
         addi    x7,     x7,     4
         addi    x8,     x8,     4
         addi    x30,    x30,    1
-        bne     x30,    x31,    -8
+        bne     x30,    x31,    -48
