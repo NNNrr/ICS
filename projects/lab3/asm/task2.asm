@@ -6,7 +6,7 @@ addi    x8,     x4,     0   ; addr_D = D_baseaddr
 addi    x9,     zero,   64
 addi    x10,    zero,   0
 
-sw      x7,     0(x8)
+sw      x6,     0(x8)
 
 addi    x7,     x7,     4
 addi    x8,     x8,     4
