@@ -8,8 +8,10 @@ addi    x10,    zero,   0
 
 sw      x6,     0(x8)
 
+addi    x5,     x5,     4
+addi    x6,     x6,     4
 addi    x7,     x7,     4
 addi    x8,     x8,     4
 
 addi    x10,    x10,     1   ; for( index_row=index_row+1 )
-bne     x10,    x9,     -20 ; for( index_row<num_size )6
+bne     x10,    x9,     -28 ; for( index_row<num_size )6
