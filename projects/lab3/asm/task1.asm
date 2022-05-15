@@ -31,14 +31,13 @@ lw      x18,    0(x7)
 add     x17,    x18,    x17 ; reg[17] = row(A)*col(B) + C
 sw      x17,    0(x8)       ; save x17 into mem[x8] 
 addi    x17,    zero,   0 
-addi    x18,    zero,   0 
 addi    x7,     x7,     4
 addi    x8,     x8,     4
                  
 addi    x11,    x11,    1   
-bne     x11,    x9 ,    -76 
+bne     x11,    x9 ,    -72
 
 addi    x6,     x6,     32   ; reg[x5] = reg[x5] + 32 // col + 1
 
 addi    x10,    x10,    1   
-bne     x10,    x9 ,    -96
+bne     x10,    x9 ,    -92
