@@ -3,7 +3,8 @@ addi    x6,     x2,     0   ; addr_B = B_baseaddr
 addi    x7,     x3,     0   ; addr_C = C_baseaddr
 addi    x8,     x4,     0   ; addr_D = D_baseaddr
 
-addi    x9,     zero,   8   
+addi    x9,     zero,   8
+addi    x17,    zero,   0   
 
 addi    x10,    zero,   0   
 
