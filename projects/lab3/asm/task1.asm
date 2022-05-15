@@ -18,7 +18,7 @@ addi    x15,    x6,     0   ; addr_B = reg[x6]
 
 lw      x13,    0(x5)       ; load data_A
 lw      x14,    0(x15)      ; load data_B
-mul     x16,    x13,    x14 ; reg[x16] = data_A * data_B
+mul     x16,    zero,   zero ; reg[x16] = data_A * data_B
 add     x17,    x17,    x16 ; accumulation result put here: reg[x17]    
 
 addi    x5,     x5,     4   ; addr_A = addr_A + 4
