@@ -29,7 +29,7 @@ bne     x12,    x9 ,    -36
 
 lw      x18,    0(x7)
 add     x17,    x18,    x17 ; reg[17] = row(A)*col(B) + C
-sw      x18,    0(x8)       ; save x17 into mem[x8] 
+sw      x17,    0(x8)       ; save x17 into mem[x8] 
 addi    x17,    zero,   0 
 addi    x18,    zero,   0 
 addi    x7,     x7,     4
