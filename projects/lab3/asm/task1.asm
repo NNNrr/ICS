@@ -1,5 +1,5 @@
         addi    x30,    zero,  0
-        addi    x31,    zero,  64
+        addi    x31,    zero,  63
         addi    x5,     x1,     0   ; addr_A = A_baseaddr
         addi    x6,     x2,     0   ; addr_B = B_baseaddr
         addi    x7,     x3,     0   ; addr_C = C_baseaddr
