@@ -241,9 +241,9 @@ int main(int argc, char **argv)
 	// clean
 	tfp->close();
 
-	// show_ram(dataA_baseaddr, 'd');
-	// show_ram(dataB_baseaddr, 'd');
-	// show_ram(dataC_baseaddr, 'd');
+	 show_ram(dataA_baseaddr, 'd');
+	 show_ram(dataB_baseaddr, 'd');
+	 show_ram(dataC_baseaddr, 'd');
 	dump_ram(savepath);
 
 	delete top;
