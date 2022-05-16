@@ -23,18 +23,18 @@ addi    x13,    x13,    4
 addi    x16,    x16,    1
 bne     x16,    x9,     -20
 
-addi    x13,    x8,     256
+;addi    x13,    x8,     256
 sw      x15,    0(x8)
 addi    x8,     x8,     4
 
-addi    x12,    x12,    32
-addi    x11,    x11,    1
-bne     x11,    x9,     -52
+;addi    x12,    x12,    32
+;addi    x11,    x11,    1
+;bne     x11,    x9,     -52
 
-addi    x6,     x6,     32
+;addi    x6,     x6,     32
 
-addi    x10,    x10,    1
-bne     x10,    x9,     -76
+;addi    x10,    x10,    1
+;bne     x10,    x9,     -76
 
 
 
