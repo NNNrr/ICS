@@ -22,7 +22,7 @@ addi    x13,    x13,    1
 bne     x13,    x12,    -20    
 lw      x14,    0(x7)
 add     x11,    x11,    x14
-sw      x11,    0(x8)  
+;sw      x11,    0(x8)  
 
 
 
