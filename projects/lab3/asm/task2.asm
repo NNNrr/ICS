@@ -14,7 +14,7 @@ vmul.vv vx4,    vx3,    vx2,    0   ; vx4 = vx2 * vx3
 
 lw      x10,    0(vx2)
 
-sw      x10,    0(x8)
+sw      vx2,    0(x8)
 
 
 
