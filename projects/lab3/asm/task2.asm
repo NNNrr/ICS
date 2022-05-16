@@ -27,10 +27,7 @@ bne     x11,    x9,     -60
 addi    x6,     x6,     32
 addi    x10,    x10,    1
 bne     x10,    x9,     -84
-
 addi    x8,     x4,     0   ; addr_D = D_baseaddr
-
-
 vle32.v vx5,    x8,     1
 vle32.v vx6,    x7,     1
 vadd.vv vx6,    vx6,    vx5,    0
