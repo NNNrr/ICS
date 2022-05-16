@@ -52,8 +52,8 @@ always @(posedge clk) begin
             endcase
           end
             default: begin
-              vreg_bias <= 'h0 ;
-              vreg_result <= 'h0 ;
+              vreg_bias <= vreg_bias ;
+              vreg_result <= vreg_result ;
             end
 
       endcase
