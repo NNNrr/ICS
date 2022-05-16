@@ -9,5 +9,5 @@ vle32.v vx3,    x6,     1           ; vx3 = mem[addr_B]
 vmul.vv vx4,    vx2,    vx3,    0   ; vx4 = vx2 * vx3
 vadd.vv vx1,    vx1,    vx4,    0   ; vx1 = vx1 + vx4
 
-vse32.v vx1,    x8,     1           ; mem[addr_D] = vx1
+vse32.v vx2,    x8,     1           ; mem[addr_D] = vx1
 
