@@ -17,15 +17,15 @@ vmul.vv vx4,    vx3,    vx2,    0   ; vx4 = vx2 * vx3
 
 vse32.v vx4,    x13,     1           ; mem[addr_D] = vx1
 
-lw      x14,    4(x13)
-;add     x15,    x15,    x14
-;addi    x13,    x13,    4
-;addi    x16,    x16,    1
-;bne     x16,    x9,     -20
+lw      x14,    0(x13)
+add     x15,    x15,    x14
+addi    x13,    x13,    4
+addi    x16,    x16,    1
+bne     x16,    x9,     -20
 
 ;addi    x13,    x8,     256
 sw      x14,    0(x8)
-;addi    x8,     x8,     4
+addi    x8,     x8,     4
 
 ;addi    x12,    x12,    32
 ;addi    x11,    x11,    1
