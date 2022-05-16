@@ -25,6 +25,7 @@ bne     x16,    x9,     -20
 
 sw      x15,    0(x8)
 addi    x8,     x8,     4
+addi    x15,    zero,   0
 
 addi    x12,    x12,    32
 addi    x11,    x11,    1
