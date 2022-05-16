@@ -12,9 +12,9 @@ vmul.vv vx4,    vx3,    vx2,    0   ; vx4 = vx2 * vx3
 
 vse32.v vx4,    x8,     1           ; mem[addr_D] = vx1
 
-vle32.v vx6,    x8,     1
+lw      x10,    0(x8)
 
-vse32.v vx6,    x9,     1
+sw      x9,     0(x10)
 
 
 
