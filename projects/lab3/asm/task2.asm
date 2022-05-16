@@ -20,8 +20,8 @@ add     x11,    x11,    x10
 addi    x9,     x9,     4
 addi    x13,    x13,    1
 bne     x13,    x12,    -20    
-
-add     x11,    x11,    x7
+lw      x14,    0(x7)
+add     x11,    x11,    x14
 sw      x11,    0(x8)  
 
 
