@@ -10,7 +10,7 @@ vle32.v vx5 ,   x7,     1
 
 vmul.vv vx4,    vx3,    vx2,    0   ; vx4 = vx2 * vx3
 
-vse32.v vx1,    x8,     1           ; mem[addr_D] = vx1
+vse32.v vx4,    x8,     1           ; mem[addr_D] = vx1
 
 vle32.v vx6,    x8,     1
 
