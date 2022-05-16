@@ -14,7 +14,7 @@ vse32.v vx4,    x8,     1           ; mem[addr_D] = vx1
 
 lw      x10,    0(x8)
 
-sw      x9,     0(x10)
+sw      x10,     0(x9)
 
 
 
