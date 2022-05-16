@@ -9,6 +9,9 @@ addi    x8,     x4,     0   ; addr_D = D_baseaddr
 vle32.v vx2,    x5,     1
 vle32.v vx3,    x6,     1
 vle32.v vx4,    x7,     1
+
+vse32.v vx4,     x8,     1
+
 vmac.lw vx4
 vmac.en 0,      vx2,    vx3
 addi    x5,     x5,     32
@@ -35,7 +38,7 @@ vmac.en 7,      vx2,    vx3
 addi    x5,     x5,     32
 vle32.v vx2,    x5,     1
 vmac.sw vx1
-vse32.v vx4,     x8,     1
+;vse32.v vx4,     x8,     1
 ;addi    x5,     x1,     0   
 ;addi    x7,     x7,     32
 ;addi    x8,     x8,     32
