@@ -33,8 +33,6 @@ vmac.en 6,      vx2,    vx3
 addi    x5,     x5,     32
 vle32.v vx2,    x5,     1
 vmac.en 7,      vx2,    vx3
-addi    x5,     x5,     32
-vle32.v vx2,    x5,     1
 vmac.sw vx1
 
 vse32.v vx2,     x8,     1
