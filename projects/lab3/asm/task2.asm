@@ -23,6 +23,7 @@ addi    x13,    x13,    4
 addi    x16,    x16,    1
 bne     x16,    x9,     -20
 
+addi    x13,    x8,     256
 sw      x15,    0(x8)
 addi    x8,     x8,     4
 
