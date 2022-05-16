@@ -16,7 +16,7 @@ reg [`VREG_BUS] vreg_result;
 reg [`VREG_BUS] output_temp;
 wire [`VREG_BUS] mul_acc;
 
-assign mac_result_o = output_temp ;
+assign mac_result_o = (alu_opcode_i == `ALU_OP_VMAC_SW) ? vreg_result : 'h0 ;
 assign mul_acc        = mac_op_v1_i[31:0]    * mac_op_v2_i [31:0]    +
                         mac_op_v1_i[63:32]   * mac_op_v2_i [63:32]   +
                         mac_op_v1_i[95:64]   * mac_op_v2_i [95:64]   +
@@ -34,9 +34,6 @@ always @(posedge clk) begin
       case(alu_opcode_i)
           `ALU_OP_VMAC_LW : begin
             vreg_bias <= mac_op_v1_i ;
-          end
-          `ALU_OP_VMAC_SW : begin
-            output_temp <= vreg_result;
           end
           `ALU_OP_VMAC_EN : begin
             case(mac_sel_i)
