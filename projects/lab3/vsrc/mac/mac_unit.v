@@ -14,10 +14,17 @@ module mac_unit(
 reg [`VREG_BUS] vreg_bias;
 reg [`VREG_BUS] vreg_result;
 reg [`VREG_BUS] output_temp;
-reg [`VREG_BUS] mul_acc;
+wire [`VREG_BUS] mul_acc;
 
 assign mac_result_o = output_temp ;
-
+assign mul_acc        = mac_op_v1_i[31:0]    * mac_op_v2_i [31:0]    +
+                        mac_op_v1_i[63:32]   * mac_op_v2_i [63:32]   +
+                        mac_op_v1_i[95:64]   * mac_op_v2_i [95:64]   +
+                        mac_op_v1_i[127:96]  * mac_op_v2_i [127:96]  +
+                        mac_op_v1_i[159:128] * mac_op_v2_i [159:128] +
+                        mac_op_v1_i[191:160] * mac_op_v2_i [191:160] +
+                        mac_op_v1_i[223:192] * mac_op_v2_i [223:192] +
+                        mac_op_v1_i[255:224] * mac_op_v2_i [255:224] ;
 always @(posedge clk) begin
     if( rst == 1'b1) begin
       vreg_bias <= 'h0 ;
@@ -32,14 +39,6 @@ always @(posedge clk) begin
             output_temp <= vreg_result;
           end
           `ALU_OP_VMAC_EN : begin
-                     mul_acc[31:0] <= mac_op_v1_i[31:0]    * mac_op_v2_i [31:0]    +
-                                      mac_op_v1_i[63:32]   * mac_op_v2_i [63:32]   +
-                                      mac_op_v1_i[95:64]   * mac_op_v2_i [95:64]   +
-                                      mac_op_v1_i[127:96]  * mac_op_v2_i [127:96]  +
-                                      mac_op_v1_i[159:128] * mac_op_v2_i [159:128] +
-                                      mac_op_v1_i[191:160] * mac_op_v2_i [191:160] +
-                                      mac_op_v1_i[223:192] * mac_op_v2_i [223:192] +
-                                      mac_op_v1_i[255:224] * mac_op_v2_i [255:224] ;
             case(mac_sel_i)
               3'b000: vreg_result[31:0]    <= mul_acc[31:0] + vreg_bias[31:0]    ;
               3'b001: vreg_result[63:32]   <= mul_acc[31:0] + vreg_bias[63:32]   ;
