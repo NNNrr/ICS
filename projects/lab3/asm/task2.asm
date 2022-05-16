@@ -30,7 +30,7 @@ addi    x15,    zero,   0
 
 addi    x12,    x12,    32
 addi    x11,    x11,    1
-bne     x11,    x9,     -56
+bne     x11,    x9,     -60
 
 ;addi    x6,     x6,     32
 
