@@ -19,7 +19,7 @@ always @(*) begin
             vexe_result_o = operand_vs1_i + operand_vs2_i ;
         end
         `ALU_OP_VMUL: begin
-            vexe_result_o = operand_vs1_i * operand_vs2_i ;
+            vexe_result_o = (operand_vs1_i * operand_vs2_i) ;
         end
         default: begin
             vexe_result_o = 0;
