@@ -112,7 +112,7 @@ assign inst_add     =  ( opcode == `OPCODE_ADD )    & ( funct3 == `FUNCT3_ADD ) 
 // add inst_mul and inst_sw
 
 assign inst_mul     =  ( opcode == `OPCODE_MUL)     & ( funct3 == `FUNCT3_MUL)  & ( funct7 == `FUNCT7_MUL);
-assign inst_sw      =  ( opcode == `OPCODE_SW)     & ( funct3 == `FUNCT3_SW) ;
+assign inst_sw      =  ( opcode == `OPCODE_SW)      & ( funct3 == `FUNCT3_SW) ;
 
 // ------------------------------
 // Vector Instructions
@@ -121,6 +121,10 @@ assign inst_sw      =  ( opcode == `OPCODE_SW)     & ( funct3 == `FUNCT3_SW) ;
 // Task - 2
 // add inst_vadd_vv inst_vmul_vv inst_vle32_v inst_vse32_v
 
+assign inst_vadd_vv =  ( opcode == `OPCODE_IVV)     & ( funct3 == `FUNCT3_IVV)   & ( funct6 == `FUNCT6_VADD_VV) ;
+assign inst_vmul_vv =  ( opcode == `OPCODE_IVV)     & ( funct3 == `FUNCT3_IVV)   & ( funct6 == `FUNCT6_VMUL_VV) ; 
+assign inst_vle32_v =  ( opcode == `OPCODE_VL)      & ( funct3 == `FUNCT3_VLE32)   & ( funct6 == `FUNCT6_VLE32) ;
+assign inst_vse32_v =  ( opcode == `OPCODE_VS)      & ( funct3 == `FUNCT3_VSE32)   & ( funct6 == `FUNCT6_VSE32) ;
 
 // ------------------------------
 // Custom Instructions
@@ -134,7 +138,8 @@ assign alu_opcode_o =   ( rst == 1'b1 )                     ?   `ALU_OP_NOP :
                                                             ?   `ALU_OP_ADD :
                         inst_bne                            ?   `ALU_OP_BNE :
                         inst_mul                            ?   `ALU_OP_MUL :
-
+                        inst_vadd_vv                        ?   `ALU_OP_VADD:
+                        inst_vmul_vv                        ?   `ALU_OP_VMUL:
                         inst_vmac_lw                        ?   `ALU_OP_VMAC_LW:
                         inst_vmac_sw                        ?   `ALU_OP_VMAC_SW:
                         inst_vmac_en                        ?   `ALU_OP_VMAC_EN:
@@ -148,12 +153,12 @@ assign alu_opcode_o =   ( rst == 1'b1 )                     ?   `ALU_OP_NOP :
 // Task - 1
 
 assign rs1_r_ena_o =    ( rst == 1'b1 )                             ?   1'b0    :
-                        ( inst_addi || inst_lw || inst_add || inst_bne || inst_mul || inst_sw)
+                        ( inst_addi || inst_lw || inst_add || inst_bne || inst_mul || inst_sw || inst_vle32_v || inst_vse32_v)
                                                                     ?   1'b1    :
                                                                         1'b0    ;
 
 assign rs1_r_addr_o =   ( rst == 1'b1 )                             ?   0       :
-                        ( inst_addi || inst_lw || inst_add || inst_bne || inst_mul || inst_sw)
+                        ( inst_addi || inst_lw || inst_add || inst_bne || inst_mul || inst_sw || inst_vle32_v || inst_vse32_v)
                                                                     ?   rs1     :
                                                                         0       ;
 
@@ -198,35 +203,41 @@ assign mem_w_data_o = rs2_data_i ;
 // Task - 2
 
 assign vs1_r_ena_o =    ( rst == 1'b1 )                             ?   1'b0    :
-                        ( inst_vmac_lw || inst_vmac_en )            ?   1'b1    :
+                        ( inst_vmac_lw || inst_vmac_en || inst_vadd_vv || inst_vmul_vv )            
+                                                                    ?   1'b1    :
                                                                         1'b0    ;
 
 assign vs1_r_addr_o =   ( rst == 1'b1 )                             ?   0       :
-                        (inst_vmac_lw || inst_vmac_en )             ?   rs1     :
+                        ( inst_vmac_lw || inst_vmac_en || inst_vadd_vv || inst_vmul_vv )            
+                                                                    ?   rs1     :
                                                                         0       ;
 
 assign vs2_r_ena_o =    ( rst == 1'b1 )                             ?   1'b0    :
-                        (inst_vmac_en )                             ?   1'b1    :
+                        ( inst_vmac_en || inst_vadd_vv || inst_vmul_vv || inst_vse32_v )                             
+                                                                    ?   1'b1    :
                                                                         1'b0    ;
 
 assign vs2_r_addr_o =   ( rst == 1'b1 )                             ?   0       :
-                        (inst_vmac_en )                             ?   rs2     :
+                        ( inst_vmac_en || inst_vadd_vv || inst_vmul_vv )                             
+                                                                    ?   rs2     :
+                        ( inst_vse32_v )                            ?   rd      :
                                                                         0       ;
 
 
-assign operand_vs1_o =  ( inst_vmac_lw || inst_vmac_en )    ?   vs1_data_i : 0 ;
-assign operand_vs2_o =  ( inst_vmac_en  )                   ?   vs2_data_i : 0 ;
+assign operand_vs1_o =  ( inst_vmac_lw || inst_vmac_en | inst_vadd_vv || inst_vmul_vv )    ?   vs1_data_i : 0 ;
+assign operand_vs2_o =  ( inst_vmac_en || inst_vadd_vv || inst_vmul_vv )                   ?   vs2_data_i : 0 ;
 
-assign vwb_ena_o = ( inst_vmac_sw ) ;
-assign vwb_sel_o = (inst_vmac_sw )  ? 2'b10 : 0 ;
+assign vwb_ena_o = ( inst_vmac_sw | inst_vadd_vv || inst_vmul_vv || inst_vle32_v) ;
+assign vwb_sel_o = (inst_vmac_sw )  ? 2'b10 :
+                   (inst_vle32_v )  ? 2'b01 : 0 ;
 assign vwb_addr_o = ( vwb_ena_o )   ?   rd  : 0 ;
 
-assign vmem_r_ena_o =    0 ;
-assign vmem_r_addr_o =   0 ;
+assign vmem_r_ena_o =    inst_vle32_v ? 1'b1 : 0 ;
+assign vmem_r_addr_o =   rs1_data_i ;
 
-assign vmem_w_ena_o =    0 ;
-assign vmem_w_addr_o =   0 ;
-assign vmem_w_data_o =   0 ;
+assign vmem_w_ena_o =    inst_vse32_v ? 1'b1 : 0 ;
+assign vmem_w_addr_o =   rs1_data_i ;
+assign vmem_w_data_o =   vs2_data_i ;
 
 assign vmac_sel_o =     inst_vmac_en ? rd[2:0] : 0 ;
 
