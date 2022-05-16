@@ -37,7 +37,7 @@ addi    x5,     x5,     32
 vle32.v vx2,    x5,     1
 vmac.sw vx1
 
-vse32.v vx1,     x8,     1
+vse32.v vx2,     x8,     1
 ;vse32.v vx4,     x8,     1
 ;addi    x5,     x1,     0   
 ;addi    x7,     x7,     32
