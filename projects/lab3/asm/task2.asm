@@ -32,10 +32,10 @@ addi    x12,    x12,    32
 addi    x11,    x11,    1
 bne     x11,    x9,     -60
 
-;addi    x6,     x6,     32
+addi    x6,     x6,     32
 
-;addi    x10,    x10,    1
-;bne     x10,    x9,     -76
+addi    x10,    x10,    1
+bne     x10,    x9,     -84
 
 
 
