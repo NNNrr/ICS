@@ -36,4 +36,3 @@ addi    x7,     x7,     32
 addi    x8,     x8,     32
 addi    x17,    x17,    1
 bne     x17,    x9,     -32
-
