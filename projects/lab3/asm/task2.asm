@@ -19,10 +19,11 @@ vmul.vv vx4,    vx2,    vx3,    0
 vse32.v vx4,    x8,     1
 
 vse32.v vx4,    x14,    1
-vle32.v vx1,    x15,    1
-vadd.vv vx1,    vx1,    vx4,    0
+vle32.v vx5,    x15,    1
+vadd.vv vx6,    vx5,    vx4,    0
+vadd.vv vx1,    vx1,    vx6,    0
 vse32.v vx1,    x8,     1
 
 addi    x14,    x14,    4
 addi    x12,    x12,    1
-bne     x12,    x9,     -28
+bne     x12,    x9,     -32
