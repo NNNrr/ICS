@@ -17,9 +17,9 @@ vmul.vv vx4,    vx2,    vx3,    0
 
 
 vse32.v vx4,    x8,     1
-vle32.v vx1,    x8,     1
+;vle32.v vx1,    x8,     1
 
-vse32.v vx1,    x14,    1
+;vse32.v vx1,    x14,    1
 ;vle32.v vx5,    x15,    1
 
 ;vadd.vv vx1,    vx1,    vx5,    0
