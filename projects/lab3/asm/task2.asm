@@ -9,7 +9,7 @@ addi    x12,    zero,   0
 
 addi    x13,    x5,     0
 addi    x14,    x8,     4
-addi    x15,    x8,     32
+addi    x15,    x8,     16
 
 vle32.v vx2,    x13,    1
 vle32.v vx3,    x6,     1
